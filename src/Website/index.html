@@ -10,15 +10,17 @@
     <h2>Login</h2>
     <form id="loginForm">
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" name="email" autocomplete="on" required><br><br>
         
         <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" autocomplete="on" required><br><br>
         
         <button type="button" onclick="login()">Login</button>
     </form>
     <br>
 
     <button onclick="getGrades()">Ottieni voti</button>
+
+    <button onclick="calculateAverage()">Calcola media</button>
 </body>
 </html>

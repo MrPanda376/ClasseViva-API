@@ -33,9 +33,7 @@ async function login() {
         localStorage.setItem('token', login.token); // Salva il token in localStorage
         localStorage.setItem('studentId', studentId); // Salva lo studentId in localStorage
 
-        console.log(login);
-
-        alert("Sessione avviata con successo!");
+        console.log(login); // Togliere
     } catch (error) {
         console.error("Errore:", error);
         alert("Si è verificato un errore durante l'autenticazione.");
@@ -66,13 +64,70 @@ async function getGrades() {
             throw new Error("Errore durante la richiesta: " + response.statusText);
         }
 
-        const res = await response.json();
+        const data = await response.json();
+        localStorage.setItem('data', JSON.stringify(data)); // Salva i voti in localStorage
 
-        // Fare una formattazione dei dati
-
-        console.log(res);
+        console.log(JSON.parse(localStorage.getItem('data'))); // Togliere
     } catch (error) {
         console.error("Errore:", error);
         alert("Si è verificato un errore durante la richiesta.");
     }
+}
+
+function calculateAverage() {
+    const data = JSON.parse(localStorage.getItem('data'));
+    let grades = {
+        period: [{}, {}]
+    };
+
+    console.log(data); // Togliere
+
+    let i = 0;
+    while (i < data.grades.length) {
+        const subjectId = data.grades[i].subjectId;
+
+        if (grades.period[0].hasOwnProperty(subjectId) && grades.period[1].hasOwnProperty(subjectId)) {
+            i++;
+            continue;
+        } else {
+            let nGrades = 0;
+            let sumGrades = 0;
+
+            const gradesFilter = data.grades.filter(grade => grade.subjectId === subjectId);
+            gradesFilter.forEach((grade) => {
+                nGrades++;
+                sumGrades += grade.decimalValue;
+            });
+
+            const averageGrade = sumGrades / nGrades;
+            let colorGrade;
+            
+            if (averageGrade >= 6) {
+                colorGrade = "green";
+            } else if (averageGrade >= 5) {
+                colorGrade = "orange";
+            } else {
+                colorGrade = "red";
+            }
+
+            if (data.grades[i].periodPos === 1) {
+                grades.period[0][subjectId] = {
+                    subjectDesc: data.grades[i].subjectDesc,
+                    average: averageGrade,
+                    averageDisplay: String(averageGrade),
+                    color: colorGrade,
+                };
+            } else {
+                grades.period[1][subjectId] = {
+                    subjectDesc: data.grades[i].subjectDesc,
+                    average: averageGrade,
+                    averageDisplay: String(averageGrade),
+                    color: colorGrade,
+                };
+            }
+            i++;
+        }
+    }
+    localStorage.setItem('grades', JSON.stringify(grades)); // Salva i voti formattati in localStorage
+    console.log(grades); // Togliere
 }
