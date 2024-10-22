@@ -77,19 +77,25 @@ async function getGrades() {
 function calculateAverage() {
     const data = JSON.parse(localStorage.getItem('data'));
     let grades = {
-        period: [{}, {}]
+        period: [{}, {}],
+        global: {}
     };
 
     console.log(data); // Togliere
 
     let i = 0;
+    let sumTotGrades = 0;
     while (i < data.grades.length) {
         const subjectId = data.grades[i].subjectId;
+        
+        // Contatore per la media totale
+        sumTotGrades += data.grades[i].decimalValue;
 
         if (grades.period[0].hasOwnProperty(subjectId) && grades.period[1].hasOwnProperty(subjectId)) {
             i++;
             continue;
         } else {
+            // Calcolo media materie
             let nGrades = 0;
             let sumGrades = 0;
 
@@ -126,6 +132,77 @@ function calculateAverage() {
                 };
             }
             i++;
+        }
+        // Calcolo media periodi
+
+        // Primo periodo
+        let nGrades = 0;
+        let sumGrades = 0;
+        let colorGrade;
+        
+        const gradesFilterPeriod_1 = data.grades.filter(grade => grade.periodPos === 1);
+        gradesFilterPeriod_1.forEach((grade) => {
+            nGrades++;
+            sumGrades += grade.decimalValue;
+        });
+
+        const averagePeriod_1 = sumGrades / nGrades;
+
+        if (averagePeriod_1 >= 6) {
+            colorGrade = "green";
+        } else if (averagePeriod_1 >= 5) {
+            colorGrade = "orange";
+        } else {
+            colorGrade = "red";
+        }
+
+        grades.period[0]["global"] = {
+            average: averagePeriod_1,
+            averageDisplay: String(averagePeriod_1),
+            color: colorGrade,
+        }
+
+        // Secondo periodo
+        nGrades = 0;
+        sumGrades = 0;
+
+        const gradesFilterPeriod_2 = data.grades.filter(grade => grade.periodPos !== 1);
+        gradesFilterPeriod_2.forEach((grade) => {
+            nGrades++;
+            sumGrades += grade.decimalValue;
+        });
+
+        const averagePeriod_2 = sumGrades / nGrades;
+
+        if (averagePeriod_2 >= 6) {
+            colorGrade = "green";
+        } else if (averagePeriod_2 >= 5) {
+            colorGrade = "orange";
+        } else {
+            colorGrade = "red";
+        }
+
+        grades.period[1]["global"] = {
+            average: averagePeriod_2,
+            averageDisplay: String(averagePeriod_2),
+            color: colorGrade,
+        }
+
+        // Calcolo media totale
+        const totAverage = sumTotGrades / data.grades.length;
+
+        if (totAverage >= 6) {
+            colorGrade = "green";
+        } else if (totAverage >= 5) {
+            colorGrade = "orange";
+        } else {
+            colorGrade = "red";
+        }
+
+        grades.global = {
+            average: totAverage,
+            averageDisplay: String(totAverage),
+            color: colorGrade,
         }
     }
     localStorage.setItem('grades', JSON.stringify(grades)); // Salva i voti formattati in localStorage
