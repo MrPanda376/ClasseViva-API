@@ -1,3 +1,15 @@
+// Codice eseguito al caricamento della pagina
+document.addEventListener('DOMContentLoaded', function() {
+    const expireDate = new Date(localStorage.getItem('expire')); // Ottiene la data di scadenza del token
+    const currentDate = new Date(); // Ottiene la data attuale
+
+    // Controlla che il token esista e sia valido
+    if (localStorage.getItem('token') !== null && currentDate < expireDate) {
+        // Reindirizza alla schermata delle medie
+        window.location.href = '/';
+    }
+});
+
 async function login() {
     // Ottieni le credenziali
     const user = document.getElementById('email').value;
@@ -32,6 +44,9 @@ async function login() {
 
         localStorage.setItem('token', login.token); // Salva il token in localStorage
         localStorage.setItem('studentId', studentId); // Salva lo studentId in localStorage
+        localStorage.setItem('expire', login.expire); // Salva la data di scadenza del token
+
+        location.reload(); // Ricarica la pagina
 
         console.log(login); // Togliere
     } catch (error) {
