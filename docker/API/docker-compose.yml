@@ -5,10 +5,11 @@ services:
     container_name: ClasseViva-API  # Container name
     working_dir: /api
     volumes:
-      - /home/luca/Desktop/ClasseViva-API/src/API:/api  # - <my folder's path>:/api
+      - ../../dependencies:/app/dependencies  # dependencies path
+      - ../src/API:/app/src/API  # my folder's path
     ports:
       - "2001:2001"  # - <server port (outside) [ex:2001]>:<container port (inside) [ex:2001]>
-    command: "node api.js"  # command to run the API server
+    command: "npm start"  # command to run the API server
     restart: unless-stopped  # Keeps the server always running unless it gets manually stopped
 
 # To update the API server:
