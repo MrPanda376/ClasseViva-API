@@ -7,18 +7,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('token') === null || currentDate > expireDate) {
         // Reindirizza alla schermata di login
         window.location.href = '/login/';
+    } else {
+        getGrades(); // Ottiene i voti
+        calculateAverage(); // Calcola la media
+        displayGrades(); // Mostra le medie nel sito
     }
-
-    getGrades(); // Ottiene i voti
-    calculateAverage(); // Calcola la media
-    displayGrades(); // Mostra le medie nel sito
 });
 
 async function getGrades() {
     const token = localStorage.getItem('token'); // Recupera il token
     const studentId = localStorage.getItem('studentId'); // Recupera lo studentId
 
-    const url = "http://localhost:2000/grades"; // URL del server proxy
+    const url = "http://192.168.0.100:2001/grades"; // URL del server proxy
+    // const url = "http://localhost:2001/grades"; // Server proxy per il development
 
     const body = {
         token: token,
