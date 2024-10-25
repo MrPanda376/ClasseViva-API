@@ -1,0 +1,23 @@
+version: '3'
+services:
+  website:
+    image: nginx:latest
+    container_name: ClasseViva-Website  # Container name
+    volumes:
+      - /home/luca/Desktop/ClasseViva-API/src/Website:/usr/share/nginx/html  # - <my folder's path>:/usr/share/nginx/html
+    ports:
+      - 2000:80  # - <server port (outside) [ex:2000]>:<container port (inside) [ex:80]>
+    restart: unless-stopped  # Keeps the webside always running unless it gets manually stopped
+
+# To update the API server:
+# 1) cd Desktop/ClasseViva-API/docker/API
+# 2) docker-compose down
+# 3) cd /home/luca/Desktop/ClasseViva-API/docker/Website
+# 4) docker-compose down
+# 5) cd /home/luca/Desktop
+# 6) sudo rm -r ClasseViva-API
+# 7) git clone https://github.com/MrPanda376/ClasseViva-API
+# 8) cd ClasseViva-API/docker/API
+# 9) docker-compose up -d
+# 10) cd /home/luca/Desktop/ClasseViva-API/docker/Website
+# 11) docker-compose up -d
