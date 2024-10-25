@@ -3,10 +3,10 @@ services:
   node-server:
     image: node:18
     container_name: ClasseViva-API  # Container name
-    working_dir: /api
+    working_dir: /app
     volumes:
-      - ../../dependencies:/api/dependencies  # dependencies path
-      - ../src/API:/api/src/API  # my folder's path
+      - ../../dependencies:/app/dependencies  # dependencies path
+      - ../src/API:/app/src/API  # my folder's path
     ports:
       - "2001:2001"  # - <server port (outside) [ex:2001]>:<container port (inside) [ex:2001]>
     command: "npm start"  # command to run the API server
