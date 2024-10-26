@@ -44,7 +44,8 @@ async function getGrades() {
             throw new Error("Errore durante la richiesta: " + response.statusText);
         }
 
-        const data = await response.json();
+        let data = await response.json();
+        data = formatGrades(data); // Rimuove i voti senza valore decimale
         localStorage.setItem('data', JSON.stringify(data)); // Salva i voti in localStorage
 
         console.log(JSON.parse(localStorage.getItem('data'))); // Togliere
@@ -52,6 +53,13 @@ async function getGrades() {
         console.error("Errore:", error);
         alert("Si è verificato un errore durante la richiesta.");
     }
+}
+
+function formatGrades(data) {
+    // Rimuove tutti i voti con decimalValue = null
+    data.grades = data.grades.filter(item => item.decimalValue !== null);
+    
+    return data;
 }
 
 function calculateAverage() {
