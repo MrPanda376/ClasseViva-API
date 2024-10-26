@@ -15,7 +15,7 @@ async function login() {
     const user = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const url = "http://192.168.0.100:2001/login"; // URL del server proxy
+    const url = "http://truenas3.ddns.net:2001/login"; // URL del server proxy
     // const url = "http://localhost:2001/login"; // Server proxy per il development
 
     // Dati che verranno inviati al server proxy
