@@ -51,7 +51,7 @@ async function getGrades() {
         console.log(JSON.parse(localStorage.getItem('data'))); // Togliere
     } catch (error) {
         console.error("Errore:", error);
-        alert("Si è verificato un errore durante la richiesta.");
+        alert("Si è verificato un errore durante la richiesta: " + error);
     }
 }
 

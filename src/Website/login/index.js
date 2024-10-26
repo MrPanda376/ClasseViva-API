@@ -36,7 +36,11 @@ async function login() {
 
         // Controlla se la richiesta ha avuto successo
         if (!response.ok) {
-            throw new Error('Errore durante l\'autenticazione.');
+            if (response.status === 422) {
+                throw new Error('Credenziali errate.');
+            } else {
+                throw new Error('Errore durante l\'autenticazione.');
+            }
         }
 
         // Ottieni la risposta
@@ -52,6 +56,6 @@ async function login() {
         console.log(login); // Togliere
     } catch (error) {
         console.error("Errore:", error);
-        alert("Si è verificato un errore durante l'autenticazione.");
+        alert(error);
     }
 }

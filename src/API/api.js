@@ -34,6 +34,8 @@ app.post('/login', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error("Errore durante la richiesta:", error.response ? error.response.data : error.message);
+        // Sends the error response to the client
+        res.status(error.response.data.statusCode).json(error.response.data);
     }
 });
 
