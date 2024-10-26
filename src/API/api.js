@@ -58,4 +58,4 @@ app.post('/grades', async (req, res) => {
     }
 });
 
-app.listen(port, () => console.log(`Api Endpoint listening on port ${port}!`));
+app.listen(port, () => console.log(`API Endpoint listening on port ${port}!`));
