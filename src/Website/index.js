@@ -18,7 +18,7 @@ async function getGrades() {
     const token = localStorage.getItem('token'); // Recupera il token
     const studentId = localStorage.getItem('studentId'); // Recupera lo studentId
 
-    const url = "http://truenas3.ddns.net:2001/grades"; // URL del server proxy
+    const url = "https://api.silvestrin.ovh/grades"; // URL del server proxy
     // const url = "http://localhost:2001/grades"; // Server proxy per il development
 
     const body = {
