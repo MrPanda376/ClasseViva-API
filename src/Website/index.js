@@ -8,11 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reindirizza alla schermata di login
         window.location.href = '/login/';
     } else {
-        getGrades(); // Ottiene i voti
-        calculateAverage(); // Calcola la media
-        displayGrades(); // Mostra le medie nel sito
+        // Chiama la funzione main
+        main().catch(error => console.error(error));
     }
 });
+
+async function main() {
+    await getGrades(); // Ottiene i voti
+    calculateAverage(); // Calcola la media
+    displayGrades(); // Mostra le medie nel sito
+}
 
 async function getGrades() {
     const token = localStorage.getItem('token'); // Recupera il token
